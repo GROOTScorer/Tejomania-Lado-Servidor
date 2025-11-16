@@ -5,7 +5,7 @@ public class EstadoPartida {
     private String jugador2 = "Jugador 2";
     private int puntaje1;
     private int puntaje2;
-    private float tiempoRestante = 5;
+    private float tiempoRestante = 300;
     private boolean jugandoPorTiempo = true;
     private boolean jugandoPorPuntaje = false;
     private boolean jugarConObstaculos = false;
