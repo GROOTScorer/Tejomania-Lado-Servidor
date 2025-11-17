@@ -3,7 +3,6 @@ package io.github.grootscorer.tejomania.entidades;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import io.github.grootscorer.tejomania.utiles.ManejoDeAudio;
 import java.util.Random;
@@ -16,6 +15,15 @@ public class Disco {
     float escalaX = 1.0f; // Valor por defecto
     float escalaY = 1.0f; // Valor por defecto
     float escalaFuente = 1.0f; // Valor por defecto
+
+    private String rutaRelativaSprite = "assets/imagenes/sprites/disco.png";
+    private String rutaAbsolutaSprite = Gdx.files.internal(rutaRelativaSprite).file().getAbsolutePath();
+
+    private String rutaRelativaSonidoGolpeMazo = "assets/audio/sonidos/sonido_golpe_mazo.mp3";
+    private String rutaAbsolutaSonidoGolpeMazo = Gdx.files.internal(rutaRelativaSonidoGolpeMazo).file().getAbsolutePath();
+
+    String rutaRelativaSonidoGolpePared = "assets/audio/sonidos/sonido_golpe_pared.mp3";
+    String rutaAbsolutaSonidoGolpePared = Gdx.files.internal(rutaRelativaSonidoGolpePared).file().getAbsolutePath();
 
     private int RADIO_DISCO = 13;
     private  int maxVelocidad = 500;
@@ -53,7 +61,7 @@ public class Disco {
 
         // Inicializar textura
         if (this.textura == null) {
-            this.textura = new Texture(Gdx.files.internal("imagenes/sprites/disco.png"));
+            this.textura = new Texture(Gdx.files.internal(rutaAbsolutaSprite));
         }
 
         // Actualizar hitbox con el nuevo radio
@@ -75,24 +83,24 @@ public class Disco {
 
         if (!discoEnAreaVerticalArco) {
             if (this.posicionX <= xCancha) {
-                ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal("audio/sonidos/sonido_golpe_pared.mp3"))));
+                ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal(rutaAbsolutaSonidoGolpePared))));
                 this.posicionX = xCancha;
                 this.velocidadX = -this.velocidadX;
             }
             if (this.posicionX + (RADIO_DISCO * 2) >= xCancha + CANCHA_ANCHO) {
-                ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal("audio/sonidos/sonido_golpe_pared.mp3"))));
+                ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal(rutaAbsolutaSonidoGolpePared))));
                 this.posicionX = xCancha + CANCHA_ANCHO - (RADIO_DISCO * 2);
                 this.velocidadX = -this.velocidadX;
             }
         }
 
         if (this.posicionY <= yCancha) {
-            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal("audio/sonidos/sonido_golpe_pared.mp3"))));
+            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal(rutaAbsolutaSonidoGolpePared))));
             this.posicionY = yCancha;
             this.velocidadY = -this.velocidadY;
         }
         if (this.posicionY + (RADIO_DISCO * 2) >= yCancha + CANCHA_ALTO) {
-            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal("audio/sonidos/sonido_golpe_pared.mp3"))));
+            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal(rutaAbsolutaSonidoGolpePared))));
             this.posicionY = yCancha + CANCHA_ALTO - (RADIO_DISCO * 2);
             this.velocidadY = -this.velocidadY;
         }
@@ -104,7 +112,7 @@ public class Disco {
         long tiempoActual = com.badlogic.gdx.utils.TimeUtils.millis();
 
         if (tiempoActual - tiempoUltimoSonidoMazo >= COOLDOWN_SONIDO_MAZO_MS) {
-            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal("audio/sonidos/sonido_golpe_mazo.mp3"))));
+            ManejoDeAudio.activarSonido((String.valueOf(Gdx.files.internal(rutaAbsolutaSonidoGolpeMazo))));
             tiempoUltimoSonidoMazo = tiempoActual;
         }
 
