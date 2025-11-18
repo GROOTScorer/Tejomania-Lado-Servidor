@@ -30,7 +30,7 @@ public class LogicaJuegoServidor implements ControladorJuegoRed {
     private final float yCancha;
 
     private float tiempoDesdeUltimaSincronizacion = 0;
-    private final float INTERVALO_SINCRONIZACION = 0.05f;
+    private final float INTERVALO_SINCRONIZACION = 0.05f; // Para menor saturación de red
 
     private ControladorJuegoRed callbackServidor;
 
@@ -72,7 +72,7 @@ public class LogicaJuegoServidor implements ControladorJuegoRed {
             if (tiempoPausaGol >= DURACION_PAUSA_GOL) {
                 pausaGol = false;
                 tiempoPausaGol = 0;
-                sincronizarEstadoConClientes(); // <-- Nueva línea: Sincroniza las posiciones al final de la pausa
+                sincronizarEstadoConClientes(); // Sincroniza las posiciones al final de la pausa
             }
             return;
         }
@@ -300,8 +300,6 @@ public class LogicaJuegoServidor implements ControladorJuegoRed {
         hiloServidor.enviarMensajeATodos(mensaje);
     }
 
-    // ==================== CALLBACKS DE RED ====================
-
     @Override
     public void onIniciarJuego() {
         System.out.println("¡Ambos jugadores conectados! Iniciando juego...");
@@ -350,9 +348,6 @@ public class LogicaJuegoServidor implements ControladorJuegoRed {
         enviarActualizacionPosicionMazo(numeroJugador, mazo);
     }
 
-    /**
-     * Actualiza todos los mazos (para el loop principal del servidor)
-     */
     public void actualizarTodosLosMazos() {
         // Mazo 1
         if (mazo1 != null) {
@@ -417,8 +412,6 @@ public class LogicaJuegoServidor implements ControladorJuegoRed {
     public void onActualizarTiempo(float tiempoRestante) {
 
     }
-
-    // ==================== MÉTODOS PÚBLICOS ====================
 
     public void detener() {
         if (hiloServidor != null) {
