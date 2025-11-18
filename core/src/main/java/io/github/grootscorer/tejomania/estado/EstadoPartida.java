@@ -12,6 +12,7 @@ public class EstadoPartida {
     private boolean jugarConTirosEspeciales = false;
     private boolean jugarConModificadores = false;
     private String canchaSeleccionada = "Cancha estandar";
+    private int puntajeGanador;
 
     public String getJugador1() {
         return this.jugador1;
@@ -62,5 +63,25 @@ public class EstadoPartida {
 
     public String getCanchaSeleccionada() {
         return this.canchaSeleccionada;
+    }
+
+    public boolean isJugandoPorPuntaje() {
+        return this.jugandoPorPuntaje;
+    }
+
+    public boolean isJugarConObstaculos() {
+        return this.jugarConObstaculos;
+    }
+
+    public boolean isJugarConTirosEspeciales() {
+        return this.jugarConTirosEspeciales;
+    }
+
+    public boolean isJugarConModificadores() {
+        return this.jugarConModificadores;
+    }
+
+    public int getPuntajeGanador() {
+        return this.puntajeGanador;
     }
 }

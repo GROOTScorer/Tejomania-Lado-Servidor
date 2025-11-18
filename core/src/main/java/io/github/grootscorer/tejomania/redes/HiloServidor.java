@@ -1,5 +1,6 @@
 package io.github.grootscorer.tejomania.redes;
 
+import io.github.grootscorer.tejomania.estado.EstadoPartida;
 import io.github.grootscorer.tejomania.interfaces.ControladorJuegoRed;
 
 import java.io.IOException;
@@ -98,9 +99,8 @@ public class HiloServidor extends Thread {
 
                 clientes.add(nuevoCliente);
 
-                // Envía al cliente su número de jugador
-                enviarMensaje("Conectado:" + clientesConectados,
-                    paquete.getAddress(), paquete.getPort());
+                // Envía número de jugador Y configuración del juego
+                enviarConfiguracionInicial(nuevoCliente);
 
                 // Si ya están los dos clientes conectados, inicia partida
                 if (clientesConectados == MAX_CLIENTES) {
@@ -163,6 +163,25 @@ public class HiloServidor extends Thread {
             i++;
         }
         return indiceCliente;
+    }
+
+    private void enviarConfiguracionInicial(ClienteRed cliente) {
+        // Formato: "Conectado:numJugador:tiempoRestante:jugandoPorTiempo:jugandoPorPuntaje:puntajeGanador:obstaculos:tirosEspeciales:modificadores:cancha"
+
+        EstadoPartida estado = controladorJuego.getEstadoPartida();
+
+        String mensaje = "Conectado:" +
+            cliente.getNumeroJugador() + ":" +
+            estado.getTiempoRestante() + ":" +
+            estado.isJugandoPorTiempo() + ":" +
+            estado.isJugandoPorPuntaje() + ":" +
+            estado.getPuntajeGanador() + ":" +
+            estado.isJugarConObstaculos() + ":" +
+            estado.isJugarConTirosEspeciales() + ":" +
+            estado.isJugarConModificadores() + ":" +
+            estado.getCanchaSeleccionada();
+
+        enviarMensaje(mensaje, cliente.getIp(), cliente.getPuerto());
     }
 
     // Envía un mensaje UDP a un cliente específico.
